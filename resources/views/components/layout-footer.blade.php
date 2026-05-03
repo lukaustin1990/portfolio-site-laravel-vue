@@ -3,6 +3,3 @@
         &copy; {{ date('Y') }} My Laravel App. All rights reserved.
     </div>
 </footer>
-<x-bs-modal-login />
-<x-bs-modal-signup />
-@vite(['resources/js/submit-login.js', 'resources/js/submit-signup.js'])

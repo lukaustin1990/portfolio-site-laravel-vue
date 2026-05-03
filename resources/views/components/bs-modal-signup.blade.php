@@ -20,7 +20,7 @@
 
                         <div class="mb-3">
                             <label class="form-label">Confirm Password</label>
-                            <input type="password" class="form-control" v-model="confirmPassword">
+                            <input type="password" class="form-control" v-model="password_confirmation">
                         </div>
                     </div>
                     <div class="modal-footer">

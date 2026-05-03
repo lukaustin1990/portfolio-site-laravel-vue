@@ -29,6 +29,37 @@ class UserController extends Controller
         Auth::login($user);
         
         // 4. return response
-        return response()->json($user, 201);
+        return response()->json([
+            "success" => true,
+            "user" => $user->only(["id", "email"])
+        ], 201);
     }    
+
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            "email" => "required|email",
+            "password" => "required|string"
+        ]);
+
+        $remember = $request->boolean("remember");
+
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            return response()->json([
+                "success" => true,
+                "user" => Auth::user()->only(["id", "email"])
+            ], 200);
+        }
+
+        return response()->json(["message" => "Invalid credentials"], 401);
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return response()->json(["message" => "Logged out successfully"], 200);
+    }
 }

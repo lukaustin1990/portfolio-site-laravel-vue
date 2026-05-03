@@ -7,12 +7,21 @@
     @vite(["resources/css/app.css"])
 </head>
 <body>
-    <x-header />
+    <x-layout-header />
 
     <main class="container">
         {{ $slot }}
     </main>
 
-    <x-footer />
+    <x-layout-footer />
+
+    <?php if (!Auth::Check()): ?>
+        <x-bs-modal-login />
+        <x-bs-modal-signup />
+        @vite(['resources/js/submit-login.js', 'resources/js/submit-signup.js'])
+    <?php else: ?>
+        @vite(['resources/js/submit-logout.js'])
+    <?php endif; ?>
+    <x-bs-modal-message />
 </body>
 </html>

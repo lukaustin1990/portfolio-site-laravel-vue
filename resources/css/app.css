@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import './bootstrap-override.css';
+@import './fontawesome-7.2.0/css/all.min.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';

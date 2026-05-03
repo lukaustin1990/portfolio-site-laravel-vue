@@ -15,3 +15,7 @@
   height: 100%; /* Bootstrap handles width already */
   object-fit: cover; /* or 'contain' if you want stretch instead of crop */
 }
+
+#account-dropdown {
+  text-decoration: none;
+}

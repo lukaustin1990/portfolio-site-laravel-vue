@@ -15,6 +15,14 @@ Route::get("/about", function () {
     return view("about");
 });
 
+// Authentication routes
+Route::post("/login", [UserController::class, "login"])->name("login");
+
+Route::post("/logout", [UserController::class, "logout"])->name("logout");
+
+Route::post("/signup", [UserController::class, "signup"])->name("signup");
+
+// Admin routes
 Route::get("/admin", function () {
     return view("admin.admin");
 });
@@ -22,15 +30,3 @@ Route::get("/admin", function () {
 Route::get("/admin/products", function () {
     return view("admin.products");
 });
-
-Route::post("/login", function () {
-    // Handle login logic here
-    return redirect()->back();
-})->name("login");
-
-Route::post("/logout", function () {
-    // Handle logout logic here
-    return redirect()->back();
-})->name("logout");
-
-Route::post("/signup", [UserController::class, "signup"])->name("signup");

@@ -10,13 +10,12 @@ document.addEventListener("DOMContentLoaded", function() {
                 return {
                     email: "",
                     password: "",
-                    confirmPassword: ""
+                    password_confirmation: ""
                 };
             },
             methods: {
                 submitSignup() {
-                    // Get the token from localStorage (if needed for authentication)
-                    const tokenApp = window.localStorage.getItem('token')
+                    console.log(this.email, this.password, this.password_confirmation);
 
                     // Web side validation
                     if (this.password.length < 8) {
@@ -24,21 +23,21 @@ document.addEventListener("DOMContentLoaded", function() {
                         return;
                     }
 
-                    if (this.password !== this.confirmPassword) {
+                    if (this.password !== this.password_confirmation) {
                         alert("Passwords do not match!");
                         return;
                     }
 
                     // Send the POST request to the server
-                    axios.post("/register", {
-                        withCredentials: true, // include cookies
-                        xsrfHeaderName: "X-CSRF-TOKEN", // Laravel expects this header
-                        Authorization: "Bearer " + tokenApp, // include CSRF token
+                    axios.post("/signup", {
                         email: this.email,
-                        password: this.password
+                        password: this.password,
+                        password_confirmation: this.password_confirmation
+                    }, {
+                        withCredentials: true
                     }).then(response => {
-                        alert("Signup successful!");
-                        // you can also close the modal here if you want
+                        sessionStorage.setItem("flash_message", JSON.stringify({ type: "success", message: "Signup successful! Please log in." }));
+                        window.location.reload();
                     }).catch(error => {
                         alert("Signup failed: " + error.response.data.message);
                     });
