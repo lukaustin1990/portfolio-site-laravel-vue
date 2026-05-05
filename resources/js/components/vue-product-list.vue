@@ -1,26 +1,31 @@
 <script setup>
-import { ref, onMounted } from "vue";
+    import { ref, onMounted } from "vue";
+    import {addToBasket} from "../functions-basket";
 
-const products = ref([]);
-const loading = ref(true);
-const error = ref(null);
+    const products = ref([]);
+    const loading = ref(true);
+    const error = ref(null);
 
-onMounted(async () => {
-    try {
-        const res = await fetch("/api/products");
+    onMounted(async () => {
+        try {
+            const res = await fetch("/api/products");
 
-        if (!res.ok) {
-            throw new Error("Failed to fetch");
+            if (!res.ok) {
+                throw new Error("Failed to fetch");
+            }
+
+            const data = await res.json();
+            products.value = data;
+        } catch (err) {
+            error.value = err.message;
+        } finally {
+            loading.value = false;
         }
+    });
 
-        const data = await res.json();
-        products.value = data;
-    } catch (err) {
-        error.value = err.message;
-    } finally {
-        loading.value = false;
+    function basketAdd(productId) {
+        addToBasket(productId);
     }
-});
 </script>
 <template>
     <p v-if="loading">Loading...</p>
@@ -71,7 +76,7 @@ onMounted(async () => {
                             <a class="btn btn-outline-secondary" :href="`/products/${product.product_code}`">
                                 <i class="fa fa-magnifying-glass"> </i>
                             </a>
-                            <button class="btn btn-primary">
+                            <button class="btn btn-primary" @click="basketAdd(product.id)">
                                 <i class="fa fa-shopping-cart"></i> Add to Basket
                             </button>
                         </div>  

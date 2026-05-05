@@ -21,10 +21,12 @@ Route::get("/products/{product}", [ProductController::class, "show"])->name("pro
 
 // Authentication routes
 Route::post("/login", [UserController::class, "login"])->name("login");
-
 Route::post("/logout", [UserController::class, "logout"])->name("logout");
-
 Route::post("/signup", [UserController::class, "signup"])->name("signup");
+
+// Basket routes
+Route::post("/basket/add", [App\Http\Controllers\BasketController::class, "add"])->name("basket.add");
+Route::post("/basket/remove", [App\Http\Controllers\BasketController::class, "remove"])->name("basket.remove");
 
 // Admin routes
 Route::get("/admin", function () {

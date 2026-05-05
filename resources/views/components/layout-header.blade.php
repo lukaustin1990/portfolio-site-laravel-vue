@@ -9,20 +9,25 @@
             </ul>
         </div>
         <div class="d-flex">
-        <?php if (auth()->check()): ?>
-            <div class="dropdown">
-                <button class="btn btn-link dropdown-toggle" type="button" id="account-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="fas fa-user"></i> {{ auth()->user()->email }}
-                </button>
-                <ul class="dropdown-menu" aria-labelledby="account-dropdown">
-                    <li>
-                        <x-form-logout />
-                    </li>
-                </ul>
-            </div>
-        <?php else: ?>
-            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#bs-modal-login">Log In</button>
-        <?php endif; ?>
+            <!-- Basket icon that is in a button opens a modal-->
+            <button class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#bs-modal-basket">
+                <i class="fa fa-shopping-cart"></i>
+                <span class="badge bg-secondary">0</span>
+            </button>
+            <?php if (auth()->check()): ?>
+                <div class="dropdown">
+                    <button class="btn btn-link dropdown-toggle" type="button" id="account-dropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fas fa-user"></i> {{ auth()->user()->email }}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="account-dropdown">
+                        <li>
+                            <x-form-logout />
+                        </li>
+                    </ul>
+                </div>
+            <?php else: ?>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#bs-modal-login">Log In</button>
+            <?php endif; ?>
         </div>
     </div>
 </nav>

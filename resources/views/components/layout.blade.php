@@ -23,5 +23,6 @@
         @vite(['resources/js/submit-logout.js'])
     <?php endif; ?>
     <x-bs-modal-message />
+    <x-bs-modal-basket />
 </body>
 </html>
