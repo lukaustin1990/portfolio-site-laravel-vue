@@ -51,18 +51,30 @@ onMounted(async () => {
 
                     <div class="col-12 col-lg">
                         <h2 class="card-title">{{ product.name }}</h2>
-                        <span class="text-muted w-100 text-truncate">{{
-                            product.description_short
-                        }}</span>
+                        <div class="row">
+                            <div class="col-6 col-lg-auto">
+                                <span class="text-muted small">
+                                    Product Code: {{ product.product_code }}
+                                </span>
+                            </div>
+                        </div>
+                        <span class="text-muted w-100 text-truncate">
+                            {{ product.description_short }}
+                        </span>
                     </div>
 
-                    <div class="col-12 col-lg-3 text-end">
+                    <div class="col-12 col-lg-4 text-end">
                         <h3 class="mb-3">
-                            £{{ Number(product.price).toFixed(2) }}
+                            £{{ Number(product.price).toFixed(2) }} <span class="fs-6 text-muted">ex. VAT</span>
                         </h3>
-                        <button class="btn btn-primary w-100">
-                            Add to Basket
-                        </button>
+                        <div class="btn-group" role="group">
+                            <a class="btn btn-outline-secondary" :href="`/products/${product.product_code}`">
+                                <i class="fa fa-magnifying-glass"> </i>
+                            </a>
+                            <button class="btn btn-primary">
+                                <i class="fa fa-shopping-cart"></i> Add to Basket
+                            </button>
+                        </div>  
                     </div>
                 </div>
             </div>

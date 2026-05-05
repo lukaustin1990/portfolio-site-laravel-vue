@@ -13,4 +13,9 @@ class Product extends Model
         "price",
         "image",
     ];
+
+    public function getRouteKeyName()
+    {
+        return "product_code";
+    }
 }

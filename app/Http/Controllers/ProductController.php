@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -14,12 +14,12 @@ class ProductController extends Controller
         //return Product::all();
     }
 
-    public function show($id)
+    public function show(Product $product)
     {
-        return response()->json(Product::findOrFail($id));
+        return view("product", compact("product"));
     }
 
-    public function insert(Request $request)
+    public function api_insert(Request $request)
     {
         $data = $request->validate([
             "name" => "required|string|max:255",
@@ -34,9 +34,9 @@ class ProductController extends Controller
         return response()->json($product, 201);
     }
 
-    public function update(Request $request, $id)
+    public function api_update(Request $request, int $id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
@@ -54,9 +54,9 @@ class ProductController extends Controller
         return response()->json($product);
     }
 
-    public function delete($id)
+    public function api_delete(int $id)
     {
-        $product = Product::find($id);
+        $product = Product::findOrFail($id);
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
