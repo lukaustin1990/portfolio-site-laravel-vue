@@ -27,6 +27,7 @@ Route::post("/signup", [UserController::class, "signup"])->name("signup");
 // Basket routes
 Route::post("/basket/add", [App\Http\Controllers\BasketController::class, "add"])->name("basket.add");
 Route::post("/basket/remove", [App\Http\Controllers\BasketController::class, "remove"])->name("basket.remove");
+Route::get("/basket", [\App\Http\Controllers\BasketController::class, "api_get"])->name("basket.api_get");
 
 // Admin routes
 Route::get("/admin", function () {

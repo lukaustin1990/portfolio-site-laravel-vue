@@ -9,10 +9,9 @@
             </ul>
         </div>
         <div class="d-flex">
-            <!-- Basket icon that is in a button opens a modal-->
-            <button class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#bs-modal-basket">
+            <button type="button" class="btn btn-outline-secondary me-2" id="basket-open">
                 <i class="fa fa-shopping-cart"></i>
-                <span class="badge bg-secondary">0</span>
+                <span id="basket-count" class="badge bg-secondary">0</span>
             </button>
             <?php if (auth()->check()): ?>
                 <div class="dropdown">

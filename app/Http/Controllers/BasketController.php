@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
+use Pcntl\QosClass;
 
 class BasketController extends Controller
 {
@@ -14,18 +16,19 @@ class BasketController extends Controller
             return response()->json(["message" => "Product ID is required"], 400);
         }
 
-        // Check if basket session exists, if not create an empty array
-        if (!session()->has("basket")) {
-            session()->put("basket", []);
-        }
+        $basket = session()->get("basket", []); // default to empty array
+
+        // Check if product_id is valid
+        $productId = $request->input("product_id");
+        if (!Product::where("id", "=", $productId, false)->exists()) {
+            return response()->json(["error" => "Invalid product"], 404);
+        }        
 
         // Check if product_id is already in the basket, if so add 1 to the quantity, otherwise add it with quantity 1
-        $basket = session()->get("basket");
-        $productId = $request->input("product_id");
         if (isset($basket[$productId])) {
-            $basket[$productId]["quantity"] += 1;
+            $basket[$productId]["quantity"]++;
         } else {
-            $basket[$productId] = ["quantity" => 1];
+            $basket[$productId]["quantity"] = 1;
         }
         session()->put("basket", $basket);
     }
@@ -54,7 +57,17 @@ class BasketController extends Controller
 
     public function api_get()
     {
+        // Get product ID's from session
+        $productIds = array_keys(session()->get("basket", []));
+
+        // Get products from database using the product ID's and only return the id, name, price and image fields
+        $products = Product::whereIn("id", $productIds, false, false)->get();
+
+        // Add quantity field to each product based on the session data
         $basket = session()->get("basket", []);
-        return response()->json($basket);
+        foreach ($products as $product) {
+            $product->quantity = $basket[$product->id]["quantity"] ?? 0;
+        }
+        return response()->json($products);
     }
 }
